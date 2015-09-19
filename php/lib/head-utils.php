@@ -53,6 +53,6 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
 
         <!-- Latest compiled and minified Bootstrap JavaScript, all compiled plugins included -->
         <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        <title>Bootstrap 101 Template (DDC Version!)</title>
+        <title>New Mexico Approved</title>
     </head>
     <body>
