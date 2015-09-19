@@ -21,8 +21,9 @@
                      data-height="300" data-small-header="true" data-adapt-container-width="true"
                      data-hide-cover="false" data-show-facepile="false" data-show-posts="true">
                     <div class="fb-xfbml-parse-ignore">
-                        <blockquote cite="https://www.facebook.com/newmexicoapproved"><a
-                                href="https://www.facebook.com/newmexicoapproved">New Mexico Approved</a></blockquote>
+                        <blockquote cite="https://www.facebook.com/newmexicoapproved">
+                            <a href="https://www.facebook.com/newmexicoapproved">New Mexico Approved</a>
+                        </blockquote>
                     </div>
                 </div>
             </div>

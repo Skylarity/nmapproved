@@ -13,7 +13,6 @@ require_once("php/lib/head-utils.php");
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));</script>
 <!-- /Facebook stuff -->
-
 <div class="sfooter-content">
     <?php require_once("php/lib/header.php"); ?>
     <?php require_once("php/lib/info.php"); ?>
