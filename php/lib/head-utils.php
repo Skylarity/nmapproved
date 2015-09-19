@@ -55,4 +55,4 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
         <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
         <title>New Mexico Approved</title>
     </head>
-    <body>
+    <body class="sfooter">
