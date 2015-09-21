@@ -19,6 +19,7 @@ CREATE TABLE business (
 	phone      VARCHAR(64),
 	website    VARCHAR(64),
 	email      VARCHAR(64),
+	category   VARCHAR(64),
 	INDEX (businessId),
 	PRIMARY KEY (businessId)
 );
