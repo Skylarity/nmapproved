@@ -5,7 +5,7 @@ require_once("../helpers/filter.php");
 /**
  * @author Skyler Rexroad
  */
-class Business {
+class Business implements JsonSerializable {
 
     /**
      * Business ID, primary key
@@ -178,6 +178,11 @@ class Business {
      */
     public function setCategory($category) {
         $this->category = Filter::filterString($category, "Business category", 64);
+    }
+
+    public function JsonSerialize() {
+        $fields = get_object_vars($this);
+        return ($fields);
     }
 
     // TODO: DB Stuff
