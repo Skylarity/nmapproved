@@ -3,6 +3,8 @@
 require_once("../helpers/filter.php");
 
 /**
+ * This class entails a business with ID, name, location, phone number, website, email, and category.
+ *
  * @author Skyler Rexroad
  */
 class Business implements JsonSerializable {
@@ -246,7 +248,7 @@ class Business implements JsonSerializable {
 
     /**
      * @param PDO $pdo
-     * @param $businessId business ID to check for
+     * @param int $businessId business ID to check for
      * @return Business|null returns a business if found, or null
      * @throws Exception catch-all error handling
      */
