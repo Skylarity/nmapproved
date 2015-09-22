@@ -1,7 +1,14 @@
 <?php
 
-class User implements JsonSerializable {
 
+/**
+ * Class User for sites bases of users
+ *
+ * The class to handle to users
+ *
+ * @author Charles Sandidge charles@designbyNinja.com
+ **/
+class User implements JsonSerializable {
 
 	/**
 	 * id for user, this is primary key
@@ -23,7 +30,6 @@ class User implements JsonSerializable {
 	 * @var string $email
 	 **/
 	private $email;
-
 
 /**
  *
