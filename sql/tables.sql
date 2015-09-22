@@ -13,13 +13,14 @@ CREATE TABLE user (
 );
 
 CREATE TABLE business (
-	businessId INT UNSIGNED AUTO_INCREMENT NOT NULL,
-	name       VARCHAR(128)                NOT NULL,
-	location   VARCHAR(128),
-	phone      VARCHAR(64),
-	website    VARCHAR(64),
-	email      VARCHAR(64),
-	category   VARCHAR(64),
+	businessId  INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	name        VARCHAR(128)                NOT NULL,
+	location    VARCHAR(128),
+	phone       VARCHAR(64),
+	website     VARCHAR(64),
+	email       VARCHAR(64),
+	category    VARCHAR(64),
+	subcategory VARCHAR(64),
 	INDEX (businessId),
 	PRIMARY KEY (businessId)
 );
