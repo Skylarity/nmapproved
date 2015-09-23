@@ -14,9 +14,10 @@ require_once("php/lib/head-utils.php");
     }(document, 'script', 'facebook-jssdk'));</script>
 <!-- /Facebook stuff -->
 <div class="sfooter-content">
-    <?php require_once("php/lib/header.php"); ?>
     <?php require_once("php/lib/info.php"); ?>
+    <?php require_once("php/lib/expo.php"); ?>
     <?php require_once("php/lib/eat-shop-play.php"); ?>
+    <?php require_once("php/lib/facebook.php"); ?>
 </div>
 <?php require_once("php/lib/footer.php"); ?>
 </body>
