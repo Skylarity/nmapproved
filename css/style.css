@@ -27,6 +27,11 @@ header {
 	color: white !important;
 }
 
+.navbar-brand:hover {
+	color: white !important;
+	background-color: #be0a2f !important;
+}
+
 .nav-link {
 	color: white !important;
 }

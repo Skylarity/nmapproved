@@ -33,9 +33,11 @@ CREATE TABLE description (
 );
 
 CREATE TABLE image (
-	businessId  INT UNSIGNED NOT NULL,
-	imageId INT UNSIGNED AUTO_INCREMENT NOT NULL,
-	type VARCHAR(16),
-	path VARCHAR(256),
-	FOREIGN KEY (businessId) REFERENCES business (businessId)
+	businessId INT UNSIGNED                NOT NULL,
+	imageId    INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	type       VARCHAR(16),
+	path       VARCHAR(256),
+	FOREIGN KEY (businessId) REFERENCES business (businessId),
+	INDEX (imageId),
+	PRIMARY KEY (imageId)
 );
