@@ -2,5 +2,5 @@
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^/?(\d+)?$ /~invtext/backend/php/api/user/?userId=$1
+RewriteRule ^/?(\d+)?$ /backend/php/api/user/?userId=$1
 </IfModule>

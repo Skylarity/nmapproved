@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS image;
 DROP TABLE IF EXISTS description;
 DROP TABLE IF EXISTS business;
 DROP TABLE IF EXISTS user;
@@ -28,5 +29,13 @@ CREATE TABLE business (
 CREATE TABLE description (
 	businessId  INT UNSIGNED NOT NULL,
 	description TEXT,
+	FOREIGN KEY (businessId) REFERENCES business (businessId)
+);
+
+CREATE TABLE image (
+	businessId  INT UNSIGNED NOT NULL,
+	imageId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	type VARCHAR(16),
+	path VARCHAR(256),
 	FOREIGN KEY (businessId) REFERENCES business (businessId)
 );
