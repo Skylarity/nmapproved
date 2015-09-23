@@ -24,7 +24,7 @@ app.controller("LoginController", function($http, LoginService, $window, $scope)
 			.then(function(reply) {
 				if(typeof reply.data === "object") {
 					if(reply.status === 200) {
-						$window.location.href = "../lib/angular/views/admin-panel.php"
+						$window.location.href = "../pages/adminpanel.php"
 					}
 				} else {
 					return ($q.reject(reply.data));
@@ -35,11 +35,11 @@ app.controller("LoginController", function($http, LoginService, $window, $scope)
 	};
 
 	$scope.logout = function() {
-		$http.get("/~invtext/backend/php/lib/logout.php")
+		$http.get("../../logout.php")
 			.then(function(reply) {
 				if(typeof reply.data === "object") {
 					if(reply.status === 200) {
-						$window.location.href = "../../../pages/launch-page.php"
+						$window.location.href = "../../index.php"
 					}
 				}
 
