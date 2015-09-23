@@ -58,12 +58,15 @@ header {
 }
 
 .logo {
-	height: 300px;
+	padding: 20px 0;
+	height: 200px;
 	width: auto;
 }
 
 .event-title {
+	padding: 0 0 5px 0;
 	color: #be0a2f;
+	border-bottom: solid 1px #be0a2f;
 }
 
 .event-info {
