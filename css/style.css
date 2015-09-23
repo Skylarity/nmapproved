@@ -46,7 +46,7 @@ header {
  ****************************************/
 
 .info {
-	padding: 20px 0;
+	padding: 60px 0;
 
 	background: url(../img/nma/local-sign.jpg) no-repeat center center fixed;
 	-webkit-background-size: cover;
@@ -58,8 +58,7 @@ header {
 }
 
 .logo {
-	padding: 20px 0;
-	height: 200px;
+	height: 250px;
 	width: auto;
 }
 
@@ -77,6 +76,7 @@ header {
 
 .facebook {
 	padding: 20px 0;
+	background-color: #be0a2f;
 }
 
 /****************************************
@@ -88,14 +88,14 @@ header {
 	background-color: #be0a2f;
 }
 
-.category {
+.category-esp {
 	padding: 100px 0;
 
 	color: white;
 	text-align: center;
 }
 
-.category > h2 {
+.category-esp > h2 {
 	margin-left: auto;
 	margin-right: auto;
 
@@ -160,6 +160,56 @@ header {
 	-moz-background-size: 100% 100%;
 	-o-background-size: 100% 100%;
 	background-size: 100% 100%;
+}
+
+/****************************************
+ * Category
+ ****************************************/
+
+.category {
+
+}
+
+.cat-title {
+	padding: 0 0 5px 0;
+	color: #be0a2f;
+	border-bottom: solid 1px #be0a2f;
+}
+
+.subcategory-listing {
+	padding: 20px;
+	color: white;
+	text-align: center;
+	background-color: #be0a2f;
+}
+
+.subcategory-listing:hover,
+.subcategory-listing:active {
+	color: #be0a2f;
+	background-color: #fdd500;
+}
+
+.subcategory-listing > h3 {
+	margin: 0;
+	padding: 0;
+}
+
+.subcategory-listing-a {
+
+}
+
+.subcategory-listing-a:hover,
+.subcategory-listing-a:active {
+	color: #be0a2f;
+	text-decoration: none;
+}
+
+/****************************************
+ * Subcategory
+ ****************************************/
+
+.subcategory {
+
 }
 
 /****************************************
