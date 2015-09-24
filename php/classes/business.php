@@ -1,6 +1,6 @@
 <?php
 
-require_once("../helpers/filter.php");
+require_once(dirname(__DIR__) . "/helpers/filter.php");
 
 /**
  * This class entails a business with ID, name, location, phone number, website, email, and category.
@@ -341,9 +341,12 @@ class Business implements JsonSerializable {
 		$string = Filter::filterString($string, "Input string \"string\" in getBusinessByString()");
 
 		// Create query template
-		$query = "SELECT businessId, name, location, phone, website, email, category, subcategory FROM business WHERE $attribute = $string";
+		$query = "SELECT businessId, name, location, phone, website, email, category, subcategory FROM business WHERE :attribute = :string";
 		$statement = $pdo->prepare($query);
-		$statement->execute();
+
+		// Bind the variables to the placeholders
+		$parameters = array("attribute" => $attribute, "string" => $string);
+		$statement->execute($parameters);
 
 		// Grab the businesses from MySQL
 		$businesses = new SplFixedArray($statement->rowCount());
