@@ -12,7 +12,7 @@ $pdo = connectToEncryptedMySQL("/etc/apache2/mysql/nmapproved.ini");
 
 $_SESSION["category"] = "play";
 
-$businessesBySubcat = Business::getBusinessesByString($pdo, "category", $_SESSION["category"]);
+$businessesBySubcat = Business::getBusinessesByString($pdo, "categoryId", $_SESSION["category"]);
 
 $_SESSION["businesses"] = $businessesBySubcat;
 

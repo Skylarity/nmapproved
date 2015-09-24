@@ -47,15 +47,9 @@ class Business implements JsonSerializable {
 
 	/**
 	 * Business category
-	 * @var string $category
+	 * @var int $categoryId
 	 */
-	private $category;
-
-	/**
-	 * Business subcategory
-	 * @var string $subcategory
-	 */
-	private $subcategory;
+	private $categoryId;
 
 	/**
 	 * @param int $businessId primary key of the business
@@ -64,10 +58,9 @@ class Business implements JsonSerializable {
 	 * @param string $phone phone number of the business
 	 * @param string $website website of the business
 	 * @param string $email email of the business
-	 * @param string $category category of the business
-	 * @param string $subcategory subcategory of the business
+	 * @param string $categoryId category of the business
 	 */
-	public function __construct($businessId, $name, $location, $phone, $website, $email, $category, $subcategory) {
+	public function __construct($businessId, $name, $location, $phone, $website, $email, $categoryId) {
 		try {
 			$this->setBusinessId($businessId);
 			$this->setName($name);
@@ -75,8 +68,7 @@ class Business implements JsonSerializable {
 			$this->setPhone($phone);
 			$this->setWebsite($website);
 			$this->setEmail($email);
-			$this->setCategory($category);
-			$this->setSubcategory($subcategory);
+			$this->setCategoryId($categoryId);
 		} catch(InvalidArgumentException $invalidArgument) {
 			// Rethrow to caller
 			throw new InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument);
@@ -195,37 +187,15 @@ class Business implements JsonSerializable {
 	/**
 	 * @return string
 	 */
-	public function getCategory() {
-		return $this->category;
+	public function getCategoryId() {
+		return $this->categoryId;
 	}
 
 	/**
-	 * @param string $category
+	 * @param string $categoryId
 	 */
-	public function setCategory($category) {
-		if(strlen($category) > 0) {
-			$this->category = Filter::filterString($category, "Business category", 64);
-		} else {
-			$this->category = "";
-		}
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getSubcategory() {
-		return $this->subcategory;
-	}
-
-	/**
-	 * @param string $subcategory
-	 */
-	public function setSubcategory($subcategory) {
-		if(strlen($subcategory) > 0) {
-			$this->subcategory = Filter::filterString($subcategory, "Business subcategory", 64);
-		} else {
-			$this->subcategory = "";
-		}
+	public function setCategoryId($categoryId) {
+		$this->categoryId = Filter::filterInt($categoryId, "Business category ID");
 	}
 
 	/**
@@ -248,11 +218,11 @@ class Business implements JsonSerializable {
 		}
 
 		// Create query template
-		$query = "INSERT INTO business(name, location, phone, website, email, category, subcategory) VALUES (:name, :location, :phone, :website, :email, :category, :subcategory)";
+		$query = "INSERT INTO business(name, location, phone, website, email, categoryId) VALUES (:name, :location, :phone, :website, :email, :category)";
 		$statement = $pdo->prepare($query);
 
 		// Bind the variables to the placeholders
-		$parameters = array("name" => $this->getName(), "location" => $this->getLocation(), "phone" => $this->getPhone(), "website" => $this->getWebsite(), "email" => $this->getEmail(), "category" => $this->getCategory(), "subcategory" => $this->getSubcategory());
+		$parameters = array("name" => $this->getName(), "location" => $this->getLocation(), "phone" => $this->getPhone(), "website" => $this->getWebsite(), "email" => $this->getEmail(), "category" => $this->getCategoryId());
 		$statement->execute($parameters);
 
 		// Update null ID with real ID
@@ -284,11 +254,11 @@ class Business implements JsonSerializable {
 	 */
 	public function update(PDO &$pdo) {
 		// Create query template
-		$query = "UPDATE business SET name = :name, location = :location, phone = :phone, website = :website, email = :email, category = :category, subcategory = :subcategory WHERE businessId = :businessId";
+		$query = "UPDATE business SET name = :name, location = :location, phone = :phone, website = :website, email = :email, categoryId = :categoryId WHERE businessId = :businessId";
 		$statement = $pdo->prepare($query);
 
 		// Bind the variables to the placeholders
-		$parameters = array("name" => $this->getName(), "location" => $this->getLocation(), "phone" => $this->getPhone(), "website" => $this->getWebsite(), "email" => $this->getEmail(), "category" => $this->getCategory(), "businessId" => $this->getBusinessId(), "subcategory" => $this->getSubcategory());
+		$parameters = array("name" => $this->getName(), "location" => $this->getLocation(), "phone" => $this->getPhone(), "website" => $this->getWebsite(), "email" => $this->getEmail(), "categoryId" => $this->getCategoryId(), "businessId" => $this->getBusinessId());
 		$statement->execute($parameters);
 	}
 
@@ -303,7 +273,7 @@ class Business implements JsonSerializable {
 		$businessId = Filter::filterInt($businessId, "Business ID");
 
 		// Create query template
-		$query = "SELECT businessId, name, location, phone, website, email, category, subcategory FROM business WHERE businessId = :businessId";
+		$query = "SELECT businessId, name, location, phone, website, email, categoryId FROM business WHERE businessId = :businessId";
 		$statement = $pdo->prepare($query);
 
 		// Bind the variables to the placeholders
@@ -317,7 +287,7 @@ class Business implements JsonSerializable {
 			$row = $statement->fetch();
 
 			if($row !== false) {
-				$business = new Business($row["businessId"], $row["name"], $row["location"], $row["phone"], $row["website"], $row["email"], $row["category"], $row["subcategory"]);
+				$business = new Business($row["businessId"], $row["name"], $row["location"], $row["phone"], $row["website"], $row["email"], $row["category"]);
 			}
 		} catch(Exception $exception) {
 			// Rethrow to caller
@@ -341,7 +311,7 @@ class Business implements JsonSerializable {
 		$string = Filter::filterString($string, "Input string \"string\" in getBusinessByString()");
 
 		// Create query template
-		$query = "SELECT businessId, name, location, phone, website, email, category, subcategory FROM business WHERE $attribute = :string";
+		$query = "SELECT businessId, name, location, phone, website, email, categoryId FROM business WHERE $attribute = :string";
 		$statement = $pdo->prepare($query);
 
 		// Bind the variables to the placeholders
@@ -353,7 +323,7 @@ class Business implements JsonSerializable {
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$business = new Business($row["businessId"], $row["name"], $row["location"], $row["phone"], $row["website"], $row["email"], $row["category"], $row["subcategory"]);
+				$business = new Business($row["businessId"], $row["name"], $row["location"], $row["phone"], $row["website"], $row["email"], $row["category"]);
 				$businesses[$businesses->key()] = $business;
 				$businesses->next();
 			} catch(Exception $exception) {
