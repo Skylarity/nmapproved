@@ -10,13 +10,9 @@ $pdo = connectToEncryptedMySQL("/etc/apache2/mysql/nmapproved.ini");
 
 /* TESTING */
 
-$_SESSION["subcategory"] = "play";
+$_SESSION["category"] = "play";
 
-$businessesBySubcat = Business::getBusinessesByString($pdo, "subcategory", $_SESSION["subcategory"]);
-//var_dump($businessesBySubcat);
-//foreach($businessesBySubcat as $b) {
-//	var_dump($b);
-//}
+$businessesBySubcat = Business::getBusinessesByString($pdo, "category", $_SESSION["category"]);
 
 $_SESSION["businesses"] = $businessesBySubcat;
 
@@ -27,7 +23,7 @@ $_SESSION["businesses"] = $businessesBySubcat;
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h1 class="cat-title"><?php echo ucwords($_SESSION["subcategory"]); ?></h1>
+				<h1 class="cat-title"><?php echo ucwords($_SESSION["category"]); ?></h1>
 			</div>
 		</div>
 		<?php

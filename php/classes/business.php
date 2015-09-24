@@ -341,11 +341,11 @@ class Business implements JsonSerializable {
 		$string = Filter::filterString($string, "Input string \"string\" in getBusinessByString()");
 
 		// Create query template
-		$query = "SELECT businessId, name, location, phone, website, email, category, subcategory FROM business WHERE :attribute = :string";
+		$query = "SELECT businessId, name, location, phone, website, email, category, subcategory FROM business WHERE $attribute = :string";
 		$statement = $pdo->prepare($query);
 
 		// Bind the variables to the placeholders
-		$parameters = array("attribute" => $attribute, "string" => $string);
+		$parameters = array("string" => $string);
 		$statement->execute($parameters);
 
 		// Grab the businesses from MySQL

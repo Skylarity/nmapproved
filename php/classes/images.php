@@ -116,6 +116,28 @@ class Image implements JsonSerializable {
 		return ($fields);
 	}
 
+	public static function upload(PDO $pdo, $fileArray) {
+		// TODO
+
+		/*
+		 	Once you have file array
+				file array "error" member
+					google the constants
+					verify
+				verify file type
+					throw an exception if bad
+				imagecreatefrom___ based on switch
+					if imagecreatefrom___ returns false throw an exception
+				image_resize, etc.
+				image_save(?) - save to file (disregard user's filename)
+				image_destroy frees up memory
+
+			Once processing is complete, create new image object with essential metadata
+			insert into database
+			return inserted object
+		 */
+	}
+
 	/**
 	 * Inserts Image into database mySQL
 	 *
