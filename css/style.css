@@ -220,9 +220,13 @@ header {
 	background-color: #be0a2f;
 }
 
-.business-listing > h3 {
+.bus-h3 {
 	margin: 0;
 	padding: 0;
+}
+
+.bus-info {
+	color: #DDDDDD;
 }
 
 /****************************************
