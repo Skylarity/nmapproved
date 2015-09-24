@@ -44,9 +44,11 @@ CREATE TABLE category (
 
 CREATE TABLE subcategory (
 	subcategoryId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	categoryId    INT UNSIGNED                NOT NULL,
 	name          VARCHAR(64),
 	INDEX (subcategoryId),
-	PRIMARY KEY (subcategoryId)
+	PRIMARY KEY (subcategoryId),
+	FOREIGN KEY (categoryId) REFERENCES category (categoryId)
 );
 
 CREATE TABLE businessCategory (
@@ -61,8 +63,8 @@ CREATE TABLE businessCategory (
 CREATE TABLE image (
 	businessId INT UNSIGNED                NOT NULL,
 	imageId    INT UNSIGNED AUTO_INCREMENT NOT NULL,
-	type       VARCHAR(16),
-	path       VARCHAR(256),
+	imageType       VARCHAR(16),
+	imagePath       VARCHAR(256),
 	FOREIGN KEY (businessId) REFERENCES business (businessId),
 	INDEX (imageId),
 	PRIMARY KEY (imageId)

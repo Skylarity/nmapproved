@@ -32,6 +32,9 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
         <link type="text/css" href="<?php echo $PREFIX; ?>css/style.css" rel="stylesheet"/>
         <link type="text/css" href="<?php echo $PREFIX; ?>css/sfooter.css" rel="stylesheet"/>
 
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
         <!-- Google Fonts -->
         <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700|Oxygen:400,300,700' rel='stylesheet'
               type='text/css'>

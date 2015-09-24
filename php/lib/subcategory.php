@@ -1,17 +1,20 @@
 <?php
 require_once($PREFIX . "php/classes/autoload.php");
+require_once("/etc/apache2/mysql/encrypted-config.php");
 if(session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 
+$pdo = connectToEncryptedMySQL("/etc/apache2/mysql/nmapproved.ini");
+
 /* TESTING */
 
-$_SESSION["subcategory"] = "bakery";
-$bus1 = new Business(null, "Test 1", "PLace St. 1234", "5055555555", "website.com", "email@website.com", "eat", "bakery");
-$bus2 = new Business(null, "Test 2", "PLace St. 1234", "5057777777", "website.com", "email@website.com", "eat", "bakery");
-$bus3 = new Business(null, "Test 3", "PLace St. 1234", "5059999999", "website.com", "email@website.com", "eat", "bakery");
-var_dump($bus1);
-$_SESSION["businesses"] = [$bus1, $bus2, $bus3];
+$_SESSION["subcategory"] = "play";
+
+$businessesBySubcat = Business::getBusinessesByString($pdo, "subcategory", $_SESSION["subcategory"]);
+var_dump($businessesBySubcat);
+
+$_SESSION["businesses"] = $businessesBySubcat;
 
 /* /TESTING */
 

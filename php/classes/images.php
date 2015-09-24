@@ -48,10 +48,10 @@ class Images {
 	 * @param $newImageId
 	 **/
 	public function setImageId($newImageId) {
-		if($newImageId === null){
+		if($newImageId === null) {
 			$this->imageId = null;
 			return;
-	}
+		}
 		$newImageId = filter_var($newImageId, FILTER_VALIDATE_INT);
 		if(empty($newImageId) === true) {
 			throw (new InvalidArgumentException ("imageId invalid"));
@@ -69,10 +69,10 @@ class Images {
 
 	/**
 	 * Mutator for image type
-	 * @param $newType
+	 * @param $newImageType
 	 */
 	public function setImageType($newImageType) {
-		if($newImageType === null){
+		if($newImageType === null) {
 			$this->imageId = null;
 			return;
 		}
@@ -93,10 +93,10 @@ class Images {
 
 	/**
 	 * Mutator for image Path
-	 * @param $newPath
+	 * @param $newImagePath
 	 **/
-	public function setPath($newPath) {
-		if($newImagePath === null){
+	public function setPath($newImagePath) {
+		if($newImagePath === null) {
 			$this->imagePath = null;
 			return;
 		}
@@ -187,7 +187,7 @@ class Images {
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$image = new Image ($row["imageId"], $row["imagePath"],$row["imageType"]);
+				$image = new Image ($row["imageId"], $row["imagePath"], $row["imageType"]);
 			}
 		} catch(Exception $exception) {
 			// if the row couldn't be converted, rethrow it
