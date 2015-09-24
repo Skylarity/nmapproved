@@ -1,7 +1,7 @@
 <?php
 
 
-class Images {
+class Image implements JsonSerializable {
 
 	private $imageId;
 
@@ -95,7 +95,7 @@ class Images {
 	 * Mutator for image Path
 	 * @param $newImagePath
 	 **/
-	public function setPath($newImagePath) {
+	public function setImagePath($newImagePath) {
 		if($newImagePath === null) {
 			$this->imagePath = null;
 			return;
@@ -105,6 +105,15 @@ class Images {
 			throw (new InvalidArgumentException ("imagePath invalid"));
 		}
 		$this->imagePath = $newImagePath;
+	}
+
+	/**
+	 * Implements JSON serializing for this class
+	 * @return array
+	 */
+	public function JsonSerialize() {
+		$fields = get_object_vars($this);
+		return ($fields);
 	}
 
 	/**
@@ -174,7 +183,7 @@ class Images {
 			throw(new PDOException(""));
 		}
 		// create query template
-		$query = "SELECT imageId, imagePath, imageType FROM user WHERE imageId = :imageId";
+		$query = "SELECT imageId, imagePath, imageType FROM image WHERE imageId = :imageId";
 		$statement = $pdo->prepare($query);
 
 		// bind the image id to the place holder in the template
