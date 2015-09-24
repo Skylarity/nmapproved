@@ -1,4 +1,7 @@
 DROP TABLE IF EXISTS image;
+DROP TABLE IF EXISTS businessCategory;
+DROP TABLE IF EXISTS subcategory;
+DROP TABLE IF EXISTS category;
 DROP TABLE IF EXISTS description;
 DROP TABLE IF EXISTS business;
 DROP TABLE IF EXISTS user;
@@ -30,6 +33,29 @@ CREATE TABLE description (
 	businessId  INT UNSIGNED NOT NULL,
 	description TEXT,
 	FOREIGN KEY (businessId) REFERENCES business (businessId)
+);
+
+CREATE TABLE category (
+	categoryId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	name       VARCHAR(64),
+	INDEX (categoryId),
+	PRIMARY KEY (categoryId)
+);
+
+CREATE TABLE subcategory (
+	subcategoryId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	name          VARCHAR(64),
+	INDEX (subcategoryId),
+	PRIMARY KEY (subcategoryId)
+);
+
+CREATE TABLE businessCategory (
+	businessId    INT UNSIGNED NOT NULL,
+	categoryId    INT UNSIGNED NOT NULL,
+	subcategoryId INT UNSIGNED NOT NULL,
+	FOREIGN KEY (businessId) REFERENCES business (businessId),
+	FOREIGN KEY (categoryId) REFERENCES category (categoryId),
+	FOREIGN KEY (subcategoryId) REFERENCES subcategory (subcategoryId)
 );
 
 CREATE TABLE image (
