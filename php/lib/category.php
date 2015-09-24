@@ -6,7 +6,8 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
 
 /* TESTING */
 
-$_SESSION["subcategories"] = ["wow", "these", "are", "tests", "good", "job", "you", "sure", "did", "it", "wow"];
+$_SESSION["category"] = "eat";
+$_SESSION["subcategories"] = ["wow", "these", "are", "subcategories", "good", "job", "you", "sure", "did", "it", "wow"];
 
 /* /TESTING */
 
@@ -15,7 +16,7 @@ $_SESSION["subcategories"] = ["wow", "these", "are", "tests", "good", "job", "yo
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="cat-title"><?php echo "Title"; ?></h1>
+                <h1 class="cat-title"><?php echo ucwords($_SESSION["category"]); ?></h1>
             </div>
         </div>
         <?php

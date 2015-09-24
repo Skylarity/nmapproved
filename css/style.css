@@ -213,6 +213,18 @@ header {
 
 }
 
+.business-listing {
+	margin: 0 0 20px 0;
+	padding: 20px;
+	color: white;
+	background-color: #be0a2f;
+}
+
+.business-listing > h3 {
+	margin: 0;
+	padding: 0;
+}
+
 /****************************************
  * Footer
  ****************************************/
