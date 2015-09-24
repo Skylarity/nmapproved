@@ -8,7 +8,7 @@
  *
  * @author Charles Sandidge charles@designbyNinja.com
  **/
-class User implements JsonSerializable {
+class User {
 
 	/**
 	 * id for user, this is primary key
@@ -31,9 +31,15 @@ class User implements JsonSerializable {
 	 **/
 	private $email;
 
-/**
- *
- */
+	/**
+	 * Constructor for the User Class
+	 *
+	 * @param $newUserId
+	 * @param $newHash
+	 * @param $newSalt
+	 * @param $newEmail
+	 * @throws Exception
+	 */
 	public function __construct($newUserId, $newHash, $newSalt, $newEmail) {
 		try {
 			$this->setUserId($newUserId);
