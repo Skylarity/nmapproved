@@ -12,7 +12,7 @@ class Subcategory implements JsonSerializable {
 	 * @return int value of subcategoryId
 	 **/
 	public function getSubCategoryId() {
-		return ($this->subcategoryid);
+		return ($this->subcategoryId);
 	}
 
 	/**
