@@ -174,6 +174,12 @@ class Subcategory implements JsonSerializable {
 		return ($subcategory);
 	}
 
+	/**
+	 * Get all subcategorys
+	 *
+	 * @param PDO $pdo
+	 * @return Subcategory
+	 **/
 	public static function getAllSubcategorys(PDO &$pdo) {
 
 		// create query template
