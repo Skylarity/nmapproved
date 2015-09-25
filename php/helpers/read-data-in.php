@@ -1,6 +1,7 @@
 <?php
 
-require_once(dirname(__DIR__) . "classes/autoload.php");
+require_once(dirname(__DIR__) . "/classes/autoload.php");
+require_once("/etc/apache2/mysql/encrypted-config.php");
 
 /**
  * This file reads in a csv file, and puts it in the database.
@@ -8,6 +9,8 @@ require_once(dirname(__DIR__) . "classes/autoload.php");
  *
  * @author Skyler Rexroad
  */
+
+$pdo = connectToEncryptedMySQL("/etc/apache2/mysql/nmapproved.ini");
 
 $row = 1;
 if(($handle = fopen(dirname(dirname(__DIR__)) . "/data/vendor-list.csv", "r")) !== FALSE) {
@@ -28,9 +31,12 @@ if(($handle = fopen(dirname(dirname(__DIR__)) . "/data/vendor-list.csv", "r")) !
 			$phone = $data[8];
 		}
 		$website = "";
+		$email = $data[9];
 
-		$business = new Business(null, $name, $location, $phone, $website, $email, $categoryId);
-		$subcategory = new Subcategory();
+		$business = new Business(null, $name, $location, $phone, $website, $email, 1);
+		$business->insert($pdo);
+		$subcategory = new Subcategory(null, $data[10]);
+		$subcategory->insert($pdo);
 
 		$row++;
 	}

@@ -7,7 +7,7 @@ class Subcategory implements JsonSerializable {
 
 	private $name;
 
-	public function __constructor($subcategoryId, $name) {
+	public function __construct($subcategoryId, $name) {
 		try {
 			$this->setSubCategoryId($subcategoryId);
 			$this->setName($name);
