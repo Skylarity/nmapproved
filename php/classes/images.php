@@ -3,10 +3,17 @@
 
 class Image implements JsonSerializable {
 
+	/**
+	 * @var int for image id
+	 **/
 	private $imageId;
-
+	/**
+	 * @var string for the type of file of image
+	 **/
 	private $imageType;
-
+	/**
+	 * @var string for the path of the image
+	 **/
 	private $imagePath;
 
 
