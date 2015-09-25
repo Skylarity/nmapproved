@@ -1,6 +1,8 @@
 <?php
 
+require_once("autoload.php");
 require_once(dirname(__DIR__) . "/helpers/filter.php");
+require_once("/etc/apache2/mysql/encrypted-config.php");
 
 /**
  * This class entails a business with ID, name, location, phone number, website, email, and category.
@@ -95,7 +97,7 @@ class Business implements JsonSerializable {
 	 * @param int $businessId
 	 */
 	public function setBusinessId($businessId) {
-		$this->businessId = Filter::filterInt($businessId, true);
+		$this->businessId = Filter::filterInt($businessId, "Business ID", true);
 	}
 
 	/**
@@ -196,6 +198,11 @@ class Business implements JsonSerializable {
 	 */
 	public function setCategoryId($categoryId) {
 		$this->categoryId = Filter::filterInt($categoryId, "Business category ID");
+	}
+
+	public function setCategoryByName() {
+		$pdo = connectToEncryptedMySQL("/etc/apache2/mysql/nmapproved.ini");
+		// TODO
 	}
 
 	/**
