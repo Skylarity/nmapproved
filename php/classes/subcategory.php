@@ -7,6 +7,10 @@ class Subcategory implements JsonSerializable {
 
 	private $name;
 
+	/**
+	 * @param $subcategoryId
+	 * @param $name
+	 **/
 	public function __construct($subcategoryId, $name) {
 		try {
 			$this->setSubCategoryId($subcategoryId);
@@ -156,7 +160,7 @@ class Subcategory implements JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		// bind the subcategory id to the place holder in the template
-		$parameters = array("imageId" => $subcategory);
+		$parameters = array("subcategory" => $subcategory);
 		$statement->execute($parameters);
 
 		// grab the subcategory from mySQL
