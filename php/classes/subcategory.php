@@ -7,6 +7,25 @@ class Subcategory implements JsonSerializable {
 
 	private $name;
 
+	public function __constructor($subcategoryId, $name) {
+		try {
+			$this->setSubCategoryId($subcategoryId);
+			$this->setName($name);
+		} catch(InvalidArgumentException $invalidArgument) {
+			// Rethrow to caller
+			throw new InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument);
+		} catch(RangeException $rangeException) {
+			// Rethrow to caller
+			throw new InvalidArgumentException($rangeException->getMessage(), 0, $rangeException);
+		} catch(PDOException $pdoException) {
+			// Rethrow to caller
+			throw new InvalidArgumentException($pdoException->getMessage(), 0, $pdoException);
+		} catch(Exception $exception) {
+			// Rethrow to caller
+			throw new InvalidArgumentException($exception->getMessage(), 0, $exception);
+		}
+	}
+
 	/**
 	 * Accessor for subcategoryId
 	 * @return int value of subcategoryId
