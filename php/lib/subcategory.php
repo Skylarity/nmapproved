@@ -1,6 +1,6 @@
 <?php
-//require_once($PREFIX . "php/classes/autoload.php");
-require_once($PREFIX . "php/classes/business.php");
+require_once($PREFIX . "php/classes/autoload.php");
+//require_once($PREFIX . "php/classes/business.php");
 require_once("/etc/apache2/mysql/encrypted-config.php");
 if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
@@ -8,13 +8,7 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
 
 $pdo = connectToEncryptedMySQL("/etc/apache2/mysql/nmapproved.ini");
 
-/* TESTING */
-
-$_SESSION["category"] = "play";
-
-$businessesBySubcat = Business::getBusinessesByString($pdo, "categoryId", $_SESSION["category"]);
-
-$_SESSION["businesses"] = $businessesBySubcat;
+$_SESSION["businesses"] = Business::getBusinessesByString($pdo, "categoryId", $_SESSION["category"]);
 
 /* /TESTING */
 
@@ -23,7 +17,7 @@ $_SESSION["businesses"] = $businessesBySubcat;
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h1 class="cat-title"><?php echo ucwords($_SESSION["category"]); ?></h1>
+				<h1 class="cat-title"><?php echo ucwords($_GET["subcategory"]); ?></h1>
 			</div>
 		</div>
 		<?php

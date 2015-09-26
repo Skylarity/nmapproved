@@ -1,14 +1,16 @@
 <?php
 require_once($PREFIX . "php/classes/autoload.php");
+require_once($PREFIX . "php/classes/subcategory.php");
+require_once("/etc/apache2/mysql/encrypted-config.php");
 if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
 }
 
-/* TESTING */
+$pdo = connectToEncryptedMySQL("/etc/apache2/mysql/nmapproved.ini");
 
-$_SESSION["subcategories"] = ["wow", "these", "are", "subcategories", "good", "job", "you", "sure", "did", "it", "wow"];
+$categoryId = Category::getCategoryByCategoryName($pdo, $_GET["category"])->getCategoryId();
 
-/* /TESTING */
+$_SESSION["subcategories"] = Subcategory::getSubcategoryByCategoryId($pdo, $categoryId);
 
 ?>
 <div class="category">
@@ -24,7 +26,7 @@ $_SESSION["subcategories"] = ["wow", "these", "are", "subcategories", "good", "j
 		$i = 1;
 		echo "<div class=\"row\">" . PHP_EOL;
 		foreach($subcategories as $subcategory) {
-			$subcategory = ucwords($subcategory);
+			$subcategory = $subcategory->getName();
 			if($i % 4 === 0) {
 				echo "</div>" . PHP_EOL;
 				echo "<div class=\"row\">" . PHP_EOL;

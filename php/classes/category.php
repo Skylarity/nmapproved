@@ -1,5 +1,7 @@
 <?php
 
+require_once(dirname(__DIR__) . "/helpers/filter.php");
+
 class Category implements JsonSerializable {
 
 
@@ -166,6 +168,32 @@ class Category implements JsonSerializable {
 		// grab the subcategory from mySQL
 		try {
 			$user = null;
+			$statement->setFetchMode(PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$category = new Category ($row["categoryId"], $row["name"]);
+			}
+		} catch(Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($category);
+	}
+
+	public static function getCategoryByCategoryName(PDO &$pdo, $name) {
+
+		$name = Filter::filterString($name, "Category name");
+		// create query template
+		$query = "SELECT categoryId, name FROM category WHERE name = :name";
+		$statement = $pdo->prepare($query);
+
+		// bind the subcategory id to the place holder in the template
+		$parameters = array("name" => $name);
+		$statement->execute($parameters);
+
+		// grab the subcategory from mySQL
+		try {
+			$category = null;
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {

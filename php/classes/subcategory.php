@@ -165,7 +165,7 @@ class Subcategory implements JsonSerializable {
 
 		// grab the subcategory from mySQL
 		try {
-			$user = null;
+			$subcategory = null;
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
@@ -176,33 +176,65 @@ class Subcategory implements JsonSerializable {
 			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
 		return ($subcategory);
+	}
+
+	public static function getSubcategoryByCategoryId(PDO &$pdo, $categoryId) {
+
+		$categoryId = filter_var($categoryId, FILTER_SANITIZE_STRING);
+		if($categoryId === false) {
+			throw(new PDOException("Category ID is false"));
+		}
+		// create query template
+		$query = "SELECT subcategoryId, categoryId, name FROM subcategory WHERE categoryId = :categoryId";
+		$statement = $pdo->prepare($query);
+
+		// bind the subcategory id to the place holder in the template
+		$parameters = array("categoryId" => $categoryId);
+		$statement->execute($parameters);
+
+		// grab the subcategory from mySQL
+		try {
+			$category = null;
+			$statement->setFetchMode(PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$category = new Subcategory ($row["subcategoryId"], $row["name"]);
+			}
+		} catch(Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($category);
 	}
 
 	/**
-	 * Get all subcategorys
+	 * Get all subcategories
 	 *
 	 * @param PDO $pdo
-	 * @return Subcategory
+	 * @return SplFixedArray $subcategories
+	 * @throws Exception catch-all error handling
 	 **/
-	public static function getAllSubcategorys(PDO &$pdo) {
+	public static function getAllSubcategories(PDO &$pdo) {
 
 		// create query template
-		$query = "SELECT subcategoryId, name FROM subcategory";
+		$query = "SELECT subcategoryId, categoryId, name FROM subcategory";
 		$statement = $pdo->prepare($query);
+		$statement->execute();
 
-		// grab the user from mySQL
-		try {
-			$user = null;
-			$statement->setFetchMode(PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
+		// Grab the businesses from MySQL
+		$subcategories = new SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
 				$subcategory = new Subcategory ($row["subcategoryId"], $row["name"]);
+				$subcategories[$subcategories->key()] = $subcategory;
+				$subcategories->next();
+			} catch(Exception $exception) {
+				// Rethrow to caller
+				throw new Exception($exception->getMessage(), 0, $exception);
 			}
-		} catch(Exception $exception) {
-			// if the row couldn't be converted, rethrow it
-			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
-		return ($subcategory);
+
+		return $subcategories;
 	}
 }
-
