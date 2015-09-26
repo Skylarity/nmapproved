@@ -97,21 +97,19 @@ class Category implements JsonSerializable {
 	 **/
 	public function insert(PDO &$pdo) {
 		// make sure category doesn't already exist
-		if($this->categoryId !== null) {
-			throw (new PDOException("existing subcategory"));
+		if($this->categoryId === null) {
+			//create query template
+			$query
+				= "INSERT INTO category (name) VALUES (:name)";
+			$statement = $pdo->prepare($query);
+
+			// bind the variables to the place holders in the template
+			$parameters = array("name" => $this->name);
+			$statement->execute($parameters);
+
+			//update null subcategory with what mySQL just gave us
+			$this->categoryId = intval($pdo->lastInsertId());
 		}
-		//create query template
-		$query
-			= "INSERT INTO category (name)
-		VALUES (:name)";
-		$statement = $pdo->prepare($query);
-
-		// bind the variables to the place holders in the template
-		$parameters = array("name" => $this->name);
-		$statement->execute($parameters);
-
-		//update null subcategory with what mySQL just gave us
-		$this->categoryId = intval($pdo->lastInsertId());
 	}
 
 	/**

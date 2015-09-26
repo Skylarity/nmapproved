@@ -5,15 +5,18 @@ class Subcategory implements JsonSerializable {
 
 	private $subcategoryId;
 
+	private $categoryId;
+
 	private $name;
 
 	/**
 	 * @param $subcategoryId
 	 * @param $name
 	 **/
-	public function __construct($subcategoryId, $name) {
+	public function __construct($subcategoryId, $categoryId, $name) {
 		try {
 			$this->setSubCategoryId($subcategoryId);
+			$this->setCategoryId($categoryId);
 			$this->setName($name);
 		} catch(InvalidArgumentException $invalidArgument) {
 			// Rethrow to caller
@@ -52,6 +55,30 @@ class Subcategory implements JsonSerializable {
 			throw (new InvalidArgumentException ("subcategoryId invalid"));
 		}
 		$this->subcategoryId = $newSubCategoryId;
+	}
+
+	/**
+	 * Accessor for categoryId
+	 * @return int value of categoryId
+	 **/
+	public function getCategoryId() {
+		return ($this->categoryId);
+	}
+
+	/**
+	 * Mutator for categoryId
+	 * @param $newCategoryId
+	 **/
+	public function setCategoryId($newCategoryId) {
+		if($newCategoryId === null) {
+			$this->categoryId = null;
+			return;
+		}
+		$newCategoryId = filter_var($newCategoryId, FILTER_VALIDATE_INT);
+		if(empty($newCategoryId) === true) {
+			throw (new InvalidArgumentException ("categoryId invalid"));
+		}
+		$this->categoryId = $newCategoryId;
 	}
 
 
@@ -95,21 +122,20 @@ class Subcategory implements JsonSerializable {
 	 **/
 	public function insert(PDO &$pdo) {
 		// make sure subcategory doesn't already exist
-		if($this->subcategoryId !== null) {
-			throw (new PDOException("existing subcategory"));
-		}
-		//create query template
-		$query
-			= "INSERT INTO subcategory (name)
+		if($this->subcategoryId === null) {
+			//create query template
+			$query
+				= "INSERT INTO subcategory (name)
 		VALUES (:name)";
-		$statement = $pdo->prepare($query);
+			$statement = $pdo->prepare($query);
 
-		// bind the variables to the place holders in the template
-		$parameters = array("name" => $this->name);
-		$statement->execute($parameters);
+			// bind the variables to the place holders in the template
+			$parameters = array("name" => $this->name);
+			$statement->execute($parameters);
 
-		//update null subcategory with what mySQL just gave us
-		$this->subcategoryId = intval($pdo->lastInsertId());
+			//update null subcategory with what mySQL just gave us
+			$this->subcategoryId = intval($pdo->lastInsertId());
+		}
 	}
 
 	/**
@@ -169,7 +195,7 @@ class Subcategory implements JsonSerializable {
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$subcategory = new Subcategory ($row["subcategoryId"], $row["name"]);
+				$subcategory = new Subcategory ($row["subcategoryId"], $row["categoryId"], $row["name"]);
 			}
 		} catch(Exception $exception) {
 			// if the row couldn't be converted, rethrow it
@@ -178,33 +204,29 @@ class Subcategory implements JsonSerializable {
 		return ($subcategory);
 	}
 
-	public static function getSubcategoryByCategoryId(PDO &$pdo, $categoryId) {
+	public static function getSubcategoriesByCategoryId(PDO &$pdo, $categoryId) {
 
-		$categoryId = filter_var($categoryId, FILTER_SANITIZE_STRING);
-		if($categoryId === false) {
-			throw(new PDOException("Category ID is false"));
-		}
+		$categoryId = Filter::filterInt($categoryId, "Category ID");
 		// create query template
-		$query = "SELECT subcategoryId, categoryId, name FROM subcategory WHERE categoryId = :categoryId";
+		$query = "SELECT subcategoryId, categoryId, name FROM subcategory WHERE categoryId = $categoryId";
 		$statement = $pdo->prepare($query);
+		$statement->execute();
 
-		// bind the subcategory id to the place holder in the template
-		$parameters = array("categoryId" => $categoryId);
-		$statement->execute($parameters);
-
-		// grab the subcategory from mySQL
-		try {
-			$category = null;
-			$statement->setFetchMode(PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
-				$category = new Subcategory ($row["subcategoryId"], $row["name"]);
+		// Grab the subcategories from MySQL
+		$subcategories = new SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$subcategory = new Subcategory ($row["subcategoryId"], $row["categoryId"], $row["name"]);
+				$subcategories[$subcategories->key()] = $subcategory;
+				$subcategories->next();
+			} catch(Exception $exception) {
+				// Rethrow to caller
+				throw new Exception($exception->getMessage(), 0, $exception);
 			}
-		} catch(Exception $exception) {
-			// if the row couldn't be converted, rethrow it
-			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
-		return ($category);
+
+		return $subcategories;
 	}
 
 	/**
@@ -221,12 +243,12 @@ class Subcategory implements JsonSerializable {
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
-		// Grab the businesses from MySQL
+		// Grab the subcategories from MySQL
 		$subcategories = new SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$subcategory = new Subcategory ($row["subcategoryId"], $row["name"]);
+				$subcategory = new Subcategory ($row["subcategoryId"], $row["categoryId"], $row["name"]);
 				$subcategories[$subcategories->key()] = $subcategory;
 				$subcategories->next();
 			} catch(Exception $exception) {

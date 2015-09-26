@@ -20,7 +20,7 @@
 				<div class="col-md-3">
 					<span class="bus-info">(505) 555-555</span>
 					<br/>
-					<span class="bus-info">Location St. 1234</span>
+					<span class="bus-info"><?php echo $businessLocation; ?></span>
 					<br/>
 					<span class="bus-info">email@website.com</span>
 				</div>

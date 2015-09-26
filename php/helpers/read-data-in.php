@@ -23,7 +23,7 @@ if(($handle = fopen(dirname(dirname(__DIR__)) . "/data/vendor-list.csv", "r")) !
 		}
 
 		$name = $data[0];
-		$location = $data[2] . $data[3] . $data[4] . $data[5] . $data[6];
+		$location = $data[2] . " " . $data[3] . " " . $data[4] . " " . $data[5] . " " . $data[6];
 		$phone = "";
 		if(strlen($data[7]) > 0) {
 			$phone = $data[7];
@@ -35,7 +35,7 @@ if(($handle = fopen(dirname(dirname(__DIR__)) . "/data/vendor-list.csv", "r")) !
 
 		$business = new Business(null, $name, $location, $phone, $website, $email, 1);
 		$business->insert($pdo);
-		$subcategory = new Subcategory(null, $data[10]);
+		$subcategory = new Subcategory(null, 1, $data[10]);
 		$subcategory->insert($pdo);
 
 		$row++;

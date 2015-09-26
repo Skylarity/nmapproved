@@ -23,9 +23,14 @@ $_SESSION["businesses"] = Business::getBusinessesByString($pdo, "categoryId", $_
 		<?php
 		$businesses = $_SESSION["businesses"];
 
-		foreach($businesses as $business) {
-			$businessName = ucwords($business->getName());
-			require($PREFIX . "php/lib/business-listing.php");
+		if(count($businesses) > 0) {
+			foreach($businesses as $business) {
+				$businessName = ucwords($business->getName());
+				$businessLocation = $business->getLocation();
+				require($PREFIX . "php/lib/business-listing.php");
+			}
+		} else {
+			echo "<p>No businesses found.</p>";
 		}
 		?>
 	</div>
