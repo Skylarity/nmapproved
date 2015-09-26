@@ -8,9 +8,14 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
 
 $pdo = connectToEncryptedMySQL("/etc/apache2/mysql/nmapproved.ini");
 
-$categoryId = Category::getCategoryByCategoryName($pdo, $_GET["category"])->getCategoryId();
+if($_GET["category"] === "all") {
+	$_SESSION["subcategories"] = Subcategory::getAllSubcategories($pdo);
+} else {
+	$categoryId = Category::getCategoryByCategoryName($pdo, $_GET["category"])->getCategoryId();
+	$_SESSION["categoryId"] = $categoryId;
 
-$_SESSION["subcategories"] = Subcategory::getSubcategoriesByCategoryId($pdo, $categoryId);
+	$_SESSION["subcategories"] = Subcategory::getSubcategoriesByCategoryId($pdo, $categoryId);
+}
 
 ?>
 <div class="category">
@@ -22,6 +27,7 @@ $_SESSION["subcategories"] = Subcategory::getSubcategoriesByCategoryId($pdo, $ca
 		</div>
 		<?php
 		$subcategories = $_SESSION["subcategories"];
+		sort($subcategories->toArray());
 
 		if(count($subcategories) > 0) {
 			$i = 1;

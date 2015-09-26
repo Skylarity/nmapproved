@@ -200,9 +200,12 @@ class Business implements JsonSerializable {
 		$this->categoryId = Filter::filterInt($categoryId, "Business category ID");
 	}
 
-	public function setCategoryByName() {
-		$pdo = connectToEncryptedMySQL("/etc/apache2/mysql/nmapproved.ini");
-		// TODO
+	/**
+	 * Implements toString for this class
+	 * @return string
+	 */
+	public function __toString() {
+		return $this->getName();
 	}
 
 	/**
@@ -225,11 +228,11 @@ class Business implements JsonSerializable {
 		}
 
 		// Create query template
-		$query = "INSERT INTO business(name, location, phone, website, email, categoryId) VALUES (:name, :location, :phone, :website, :email, :category)";
+		$query = "INSERT INTO business(name, location, phone, website, email, categoryId) VALUES (:name, :location, :phone, :website, :email, :categoryId)";
 		$statement = $pdo->prepare($query);
 
 		// Bind the variables to the placeholders
-		$parameters = array("name" => $this->getName(), "location" => $this->getLocation(), "phone" => $this->getPhone(), "website" => $this->getWebsite(), "email" => $this->getEmail(), "category" => $this->getCategoryId());
+		$parameters = array("name" => $this->getName(), "location" => $this->getLocation(), "phone" => $this->getPhone(), "website" => $this->getWebsite(), "email" => $this->getEmail(), "categoryId" => $this->getCategoryId());
 		$statement->execute($parameters);
 
 		// Update null ID with real ID
@@ -330,7 +333,7 @@ class Business implements JsonSerializable {
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$business = new Business($row["businessId"], $row["name"], $row["location"], $row["phone"], $row["website"], $row["email"], $row["category"]);
+				$business = new Business($row["businessId"], $row["name"], $row["location"], $row["phone"], $row["website"], $row["email"], $row["categoryId"]);
 				$businesses[$businesses->key()] = $business;
 				$businesses->next();
 			} catch(Exception $exception) {

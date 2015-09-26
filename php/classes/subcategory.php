@@ -124,13 +124,11 @@ class Subcategory implements JsonSerializable {
 		// make sure subcategory doesn't already exist
 		if($this->subcategoryId === null) {
 			//create query template
-			$query
-				= "INSERT INTO subcategory (name)
-		VALUES (:name)";
+			$query = "INSERT INTO subcategory (categoryId, name)  VALUES (:categoryId, :name)";
 			$statement = $pdo->prepare($query);
 
 			// bind the variables to the place holders in the template
-			$parameters = array("name" => $this->name);
+			$parameters = array("categoryId" => $this->categoryId, "name" => $this->name);
 			$statement->execute($parameters);
 
 			//update null subcategory with what mySQL just gave us
@@ -175,10 +173,10 @@ class Subcategory implements JsonSerializable {
 	}
 
 
-	public static function getSubcategoryBySubcategoryId(PDO &$pdo, $subcategory) {
+	public static function getSubcategoryBySubcategoryId(PDO &$pdo, $subcategoryId) {
 
-		$subcategory = filter_var($subcategory, FILTER_SANITIZE_STRING);
-		if($subcategory === false) {
+		$subcategoryId = filter_var($subcategoryId, FILTER_SANITIZE_STRING);
+		if($subcategoryId === false) {
 			throw(new PDOException(""));
 		}
 		// create query template
@@ -186,7 +184,36 @@ class Subcategory implements JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		// bind the subcategory id to the place holder in the template
-		$parameters = array("subcategory" => $subcategory);
+		$parameters = array("subcategoryId" => $subcategoryId);
+		$statement->execute($parameters);
+
+		// grab the subcategory from mySQL
+		try {
+			$subcategory = null;
+			$statement->setFetchMode(PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$subcategory = new Subcategory ($row["subcategoryId"], $row["categoryId"], $row["name"]);
+			}
+		} catch(Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($subcategory);
+	}
+
+	public static function getSubcategoryByName(PDO &$pdo, $name) {
+
+		$name = filter_var($name, FILTER_SANITIZE_STRING);
+		if($name === false) {
+			throw(new PDOException(""));
+		}
+		// create query template
+		$query = "SELECT subcategoryId, categoryId, name FROM subcategory WHERE name = :name";
+		$statement = $pdo->prepare($query);
+
+		// bind the subcategory id to the place holder in the template
+		$parameters = array("name" => $name);
 		$statement->execute($parameters);
 
 		// grab the subcategory from mySQL

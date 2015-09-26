@@ -8,25 +8,30 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
 
 $pdo = connectToEncryptedMySQL("/etc/apache2/mysql/nmapproved.ini");
 
-$_SESSION["businesses"] = Business::getBusinessesByString($pdo, "categoryId", $_SESSION["category"]);
-
-/* /TESTING */
+$subcategory = Subcategory::getSubcategoryByName($pdo, $_GET["subcategory"]);
+$subcategoryName = $subcategory->getName();
+$subcategoryId = $subcategory->getSubCategoryId();
+$businesses = Business::getBusinessesByString($pdo, "categoryId", $subcategoryId);
 
 ?>
 <div class="subcategory">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h1 class="cat-title"><?php echo ucwords($_GET["subcategory"]); ?></h1>
+				<h1 class="cat-title"><?php echo ucwords($subcategoryName); ?></h1>
 			</div>
 		</div>
 		<?php
-		$businesses = $_SESSION["businesses"];
-
 		if(count($businesses) > 0) {
 			foreach($businesses as $business) {
 				$businessName = ucwords($business->getName());
 				$businessLocation = $business->getLocation();
+				$businessPhone = $business->getPhone();
+				$businessWebsite = $business->getWebsite();
+				$businessEmail = $business->getEmail();
+
+				$descriptions = Description::getDescriptionByBusinessId($pdo, $business->getBusinessId());
+
 				require($PREFIX . "php/lib/business-listing.php");
 			}
 		} else {

@@ -10,8 +10,8 @@ class Category implements JsonSerializable {
 	private $name;
 
 	/**
-	 * @param categoryId $
-	 * @param $name
+	 * @param int $categoryId
+	 * @param string $name
 	 */
 	public function __construct($categoryId, $name) {
 		try {
@@ -79,6 +79,14 @@ class Category implements JsonSerializable {
 			throw (new InvalidArgumentException ("name invalid"));
 		}
 		$this->name = $newName;
+	}
+
+	/**
+	 * Implements toString for this class
+	 * @return string
+	 */
+	public function __toString() {
+		return $this->getName();
 	}
 
 	/**
@@ -210,7 +218,7 @@ class Category implements JsonSerializable {
 	 * @param PDO $pdo
 	 * @return category
 	 **/
-	public static function getAllCategorys(PDO &$pdo) {
+	public static function getAllCategories(PDO &$pdo) {
 
 		// create query template
 		$query = "SELECT categoryId, name FROM category";
@@ -218,7 +226,7 @@ class Category implements JsonSerializable {
 
 		// grab the user from mySQL
 		try {
-			$user = null;
+			$category = null;
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
@@ -231,4 +239,3 @@ class Category implements JsonSerializable {
 		return ($category);
 	}
 }
-
