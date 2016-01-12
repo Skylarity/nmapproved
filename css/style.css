@@ -126,11 +126,16 @@ header {
 }
 
 .eat {
-	background: url(../img/food-bw.png) no-repeat center;
+	background: url(../img/food.png) no-repeat center;
 	-webkit-background-size: 100% 100%;
 	-moz-background-size: 100% 100%;
 	-o-background-size: 100% 100%;
 	background-size: 100% 100%;
+
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+
+	transition: filter 2s, -webkit-filter 0.42s;
 }
 
 .eat:hover,
@@ -141,14 +146,22 @@ header {
 	-moz-background-size: 100% 100%;
 	-o-background-size: 100% 100%;
 	background-size: 100% 100%;
+
+	-webkit-filter: grayscale(0%);
+	filter: grayscale(0%);
 }
 
 .shop {
-	background: url(../img/shop-bw.png) no-repeat center center;
+	background: url(../img/shop.png) no-repeat center center;
 	-webkit-background-size: 100% 100%;
 	-moz-background-size: 100% 100%;
 	-o-background-size: 100% 100%;
 	background-size: 100% 100%;
+
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+
+	transition: filter 2s, -webkit-filter 0.42s;
 }
 
 .shop:hover,
@@ -159,14 +172,22 @@ header {
 	-moz-background-size: 100% 100%;
 	-o-background-size: 100% 100%;
 	background-size: 100% 100%;
+
+	-webkit-filter: grayscale(0%);
+	filter: grayscale(0%);
 }
 
 .play {
-	background: url(../img/play-bw.png) no-repeat center center;
+	background: url(../img/play.png) no-repeat center center;
 	-webkit-background-size: 100% 100%;
 	-moz-background-size: 100% 100%;
 	-o-background-size: 100% 100%;
 	background-size: 100% 100%;
+
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+
+	transition: filter 2s, -webkit-filter 0.42s;
 }
 
 .play:hover,
@@ -177,6 +198,9 @@ header {
 	-moz-background-size: 100% 100%;
 	-o-background-size: 100% 100%;
 	background-size: 100% 100%;
+
+	-webkit-filter: grayscale(0%);
+	filter: grayscale(0%);
 }
 
 /****************************************
