@@ -3,6 +3,7 @@
 Major:
 
 * Finish descriptions
+* Finish panel to add businesses
 
 Minor:
 
